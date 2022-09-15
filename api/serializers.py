@@ -11,6 +11,8 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class TrackerSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(slug_field='username', read_only=True)
+    book = serializers.SlugRelatedField(slug_field='title', read_only=True)
 
     class Meta:
         model = BookTracker
@@ -18,6 +20,8 @@ class TrackerSerializer(serializers.ModelSerializer):
 
 
 class BookNoteSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(slug_field='username', read_only=True)
+    book = serializers.SlugRelatedField(slug_field='title', read_only=True)
 
     class Meta:
         model = BookNote

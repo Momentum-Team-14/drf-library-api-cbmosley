@@ -2,6 +2,10 @@ from django.contrib.auth.models import User
 from rest_framework import generics
 from .models import Book, BookTracker, BookNote, CustomUser
 from .serializers import BookSerializer, TrackerSerializer, BookNoteSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+
 # Create your api views here.
 
 
@@ -33,3 +37,12 @@ class BookNoteList(generics.ListCreateAPIView):
 class BookNoteDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookNote.objects.all()
     serializer_class = BookNoteSerializer
+
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'books': reverse('book-list', request=request, format=format),
+        'tracker': reverse('tracker-list', request=request, format=format),
+        'notes': reverse('notes-list', request=request, format=format)
+    })

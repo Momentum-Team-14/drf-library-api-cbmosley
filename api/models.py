@@ -35,9 +35,9 @@ class BookTracker(models.Model):
     READ = 'rd'
     UNREAD = 'ur'
     STATUS_CHOICES = [
-        (READING, 'reading'),
-        (READ, 'read'),
-        (UNREAD, 'unread')
+        (READING, 'Reading'),
+        (READ, 'Read'),
+        (UNREAD, 'Unread')
     ]
 
     status = models.CharField(
