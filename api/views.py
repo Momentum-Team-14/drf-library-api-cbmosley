@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from .permissions import IsOwnerOrReadOnly
+from django.shortcuts import get_object_or_404
 
 # Create your api views here.
 
@@ -47,6 +48,10 @@ class BookNoteList(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user.id).order_by('book')
+
+    def perform_create(self, serializer):
+        book = get_object_or_404(Book, pk=self.kwargs['book_pk'])
+        serializer.save(user = self.request.user, book=book)
 
 
 class BookNoteDetail(generics.RetrieveUpdateDestroyAPIView):

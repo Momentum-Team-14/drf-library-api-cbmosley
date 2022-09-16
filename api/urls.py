@@ -9,7 +9,8 @@ urlpatterns = [
     path('tracker-list/', views.TrackerList.as_view(), name='tracker-list'),
     path('tracker-list/<int:pk>/',
          views.TrackerDetail.as_view(), name='tracker-detail'),
-    path('books/notes', views.BookNoteList.as_view(), name='notes-list'),
+    path('books/<int:book_pk>/notes',
+         views.BookNoteList.as_view(), name='notes-list'),
     path('notes/<int:pk>/', views.BookNoteDetail.as_view(), name='notes-detail'),
     path('', views.api_root),
 
