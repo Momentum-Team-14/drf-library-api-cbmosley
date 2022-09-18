@@ -7,13 +7,17 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from .permissions import IsOwnerOrReadOnly
 from django.shortcuts import get_object_or_404
-
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 # Create your api views here.
 
 
 class BookList(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    filter_backends = [filters.SearchFilter]
+    filterset_fields = ['=title',
+                        '=author']
 
 
 class BookDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -51,7 +55,7 @@ class BookNoteList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         book = get_object_or_404(Book, pk=self.kwargs['book_pk'])
-        serializer.save(user = self.request.user, book=book)
+        serializer.save(user=self.request.user, book=book)
 
 
 class BookNoteDetail(generics.RetrieveUpdateDestroyAPIView):
