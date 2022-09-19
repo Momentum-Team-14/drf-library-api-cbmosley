@@ -16,8 +16,8 @@ class BookList(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     filter_backends = [filters.SearchFilter]
-    filterset_fields = ['=title',
-                        '=author']
+    search_fields = ['title',
+                     'author']
 
 
 class BookDetail(generics.RetrieveUpdateDestroyAPIView):
